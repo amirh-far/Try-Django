@@ -6,10 +6,11 @@ from articles.models import Article
 from django.template.loader import render_to_string
 
 article_obj = Article.objects.get(id=1)
-
+number_lis = [123, 432, 54, 6233]
 
 context = {
-    # "object" : article_obj,
+    "number_lis": number_lis,
+    "object" : article_obj,
     "title" : article_obj.title,
     "content" : article_obj.content,
     "id" : article_obj.id

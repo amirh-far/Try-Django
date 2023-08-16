@@ -3,5 +3,14 @@
 
 {% block content %}
 <h1> {{title}} id: {{id}}</h1>
+
 <p1> {{content}} </p1>
+
+
+{% for x in number_lis %}
+<li>
+     {{ x }}
+    </li>
+{% endfor %}
+
 {% endblock content %}
