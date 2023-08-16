@@ -7,8 +7,10 @@ from django.template.loader import render_to_string
 
 article_obj = Article.objects.get(id=1)
 number_lis = [123, 432, 54, 6233]
+article_queryset = Article.objects.all()
 
 context = {
+    "obj_queryset": article_queryset,
     "number_lis": number_lis,
     "object" : article_obj,
     "title" : article_obj.title,

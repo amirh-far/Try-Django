@@ -7,9 +7,9 @@
 <p1> {{content}} </p1>
 
 
-{% for x in number_lis %}
+{% for x in obj_queryset %}
 <li>
-     {{ x }}
+     <a href="/articles/{{x.id}}">{{ x.title }}</a> 
     </li>
 {% endfor %}
 
