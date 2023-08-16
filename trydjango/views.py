@@ -32,4 +32,5 @@ def home_view (request):
     Take in a request (Django sends request)
     Return Html as a response (We picj to return the response)
     """
+    # print(request.__dict__) print the request
     return HttpResponse(HTML_STRING)
