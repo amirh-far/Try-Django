@@ -9,6 +9,7 @@ from django.shortcuts import render
 
 def article_search_view(request):
     query_dict = request.GET
+    # print(dir(request))
     query = query_dict.get("q")
 
     article_obj = None
@@ -18,14 +19,14 @@ def article_search_view(request):
     context = {"object": article_obj}
     return render(request,"articles/search.html", context=context)
 
-def article_home_view(request):
+# def article_home_view(request):
 
 
-    HTML_RESPONSE = ""
+#     HTML_RESPONSE = ""
 
 
 
-    return HttpResponse(HTML_RESPONSE)
+#     return HttpResponse(HTML_RESPONSE)
 
 def article_detail_view(request, id, *args, **argv):
     article_obj = None
@@ -37,6 +38,22 @@ def article_detail_view(request, id, *args, **argv):
     }
 
     return render(request, "articles/detail.html", context=context)
+
+
+def article_create_view(request, *args, **argv):
+    context = {"created" : False}
+    if request.method == "POST":
+        # Or can use the request.GET to get the values you need but you need to use the get method instead
+        article_obj = Article()
+        article_obj.title = request.POST.get("title")
+        article_obj.content = request.POST.get("content")
+        article_obj.save()
+        # or you can do this line of code instead: Article.objects.create(title=title, content=content)
+        context["object"] = article_obj
+        context["created"] = True
+    # print(request.GET)
+
+    return render(request, "articles/create.html", context=context)
 
     
 
