@@ -59,7 +59,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "templates",   # or: '/Users/amirh-far/Desktop/Dev/Try-Django-3.2/try-django/templates'
+            BASE_DIR / "templates", # or: '/Users/amirh-far/Desktop/Dev/Try-Django-3.2/try-django/templates'
+            # BASE_DIR / "articles" / "templates",
             
                  ],
         'APP_DIRS': True,
