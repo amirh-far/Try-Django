@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Article
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
 # You can certainly use this lib to do the rendering for you:
 from django.shortcuts import render
@@ -39,7 +40,7 @@ def article_detail_view(request, id, *args, **argv):
 
     return render(request, "articles/detail.html", context=context)
 
-
+@login_required
 def article_create_view(request, *args, **argv):
     context = {"created" : False}
     if request.method == "POST":
