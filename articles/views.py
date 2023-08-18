@@ -48,7 +48,7 @@ def article_create_view(request, *args, **argv):
         article_obj.title = request.POST.get("title")
         article_obj.content = request.POST.get("content")
         article_obj.save()
-        # or you can do this line of code instead: Article.objects.create(title=title, content=content)
+        # or you can do this line of code instead: Article.objects.create(title=title, content=)
         context["object"] = article_obj
         context["created"] = True
     # print(request.GET)
