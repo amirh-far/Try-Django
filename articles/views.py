@@ -35,26 +35,46 @@ def article_detail_view(request, id, *args, **argv):
 
     return render(request, "articles/detail.html", context=context)
 
+
+
 @login_required
 def article_create_view(request, *args, **argv):
     context = {"created" : False}
     form = ArticleForm(request.POST or None)
     context = {"form": form}
-    print(dir(form))
+    # print(dir(form))
     if form.is_valid():
-        title = form.cleaned_data.get("title")
-        content = form.cleaned_data.get("content")
-    # Or can use the request.GET to get the values you need but you need to use the get method instead
-    # print(dir(for("title")))
-        print(form.__getitem__("title"), form.__getitem__("content"))
-
-        article_obj = Article()
-        article_obj.title = title
-        article_obj.content = content
-        article_obj.save()
-        # or you can do this line of code instead: Article.objects.create(title=title, content=)
+        article_obj = form.save()
+        #To avoid duplicate files:
+        context["form"] = ArticleForm()
         context["object"] = article_obj
-        context["created"] = True
+        # context["created"] = True
     # print(request.GET)
 
     return render(request, "articles/create.html", context=context)
+
+# Old way to create Obj and save:
+# @login_required
+# def article_create_view(request, *args, **argv):
+#     context = {"created" : False}
+#     form = ArticleForm(request.POST or None)
+#     context = {"form": form}
+#     print(dir(form))
+#     if form.is_valid():
+
+    #     title = form.cleaned_data.get("title")
+    #     content = form.cleaned_data.get("content")
+    # # Or can use the request.GET to get the values you need but you need to use the get method instead
+    # # print(dir(for("title")))
+    #     print(form.__getitem__("title"), form.__getitem__("content"))
+
+    #     article_obj = Article()
+    #     article_obj.title = title
+    #     article_obj.content = content
+    #     article_obj.save()
+        # or you can do this line of code instead: Article.objects.create(title=title, content=)
+    #     context["object"] = article_obj
+    #     context["created"] = True
+    # print(request.GET)
+
+    # return render(request, "articles/create.html", context=context)

@@ -1,6 +1,24 @@
 from django import forms
+from .models import Article
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        # Describing the other parts of model form with meta class
+        model = Article
+        fields = ["title", "content"]
+    def clean(self):
+        data = self.cleaned_data
+        title = data.get("title")
+        content = data.get("content")
+        #query set lookup:
+        qs = Article.objects.filter(title__icontains=title)
+        # print(qs)
+        if qs.exists():
+            self.add_error("title", f"The title \"{title}\" is already in use. Please pick another title.")
+        return data
 
-class ArticleForm(forms.Form):
+
+
+class OldArticleForm(forms.Form):
     title = forms.CharField()
     content = forms.CharField()
 
