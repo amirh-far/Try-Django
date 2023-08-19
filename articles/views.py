@@ -38,26 +38,23 @@ def article_detail_view(request, id, *args, **argv):
 @login_required
 def article_create_view(request, *args, **argv):
     context = {"created" : False}
-    form = ArticleForm()
+    form = ArticleForm(request.POST or None)
     context = {"form": form}
     print(dir(form))
-    if request.method == "POST":
-        form = ArticleForm(request.POST)
-        context["form"] = form
-        if form.is_valid():
-            title = form.cleaned_data.get("title")
-            content = form.cleaned_data.get("content")
-        # Or can use the request.GET to get the values you need but you need to use the get method instead
-        # print(dir(for("title")))
-            print(form.__getitem__("title"), form.__getitem__("content"))
+    if form.is_valid():
+        title = form.cleaned_data.get("title")
+        content = form.cleaned_data.get("content")
+    # Or can use the request.GET to get the values you need but you need to use the get method instead
+    # print(dir(for("title")))
+        print(form.__getitem__("title"), form.__getitem__("content"))
 
-            article_obj = Article()
-            article_obj.title = title
-            article_obj.content = content
-            article_obj.save()
-            # or you can do this line of code instead: Article.objects.create(title=title, content=)
-            context["object"] = article_obj
-            context["created"] = True
+        article_obj = Article()
+        article_obj.title = title
+        article_obj.content = content
+        article_obj.save()
+        # or you can do this line of code instead: Article.objects.create(title=title, content=)
+        context["object"] = article_obj
+        context["created"] = True
     # print(request.GET)
 
     return render(request, "articles/create.html", context=context)
