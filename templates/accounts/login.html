@@ -6,7 +6,8 @@
     <div style="margin-top:30px;">
         <form method="POST">
             {% csrf_token %}
-            {% if error %}
+            <!-- Old way to get user:
+                {% if error %}
                 <p style="color: red">{{ error }}</p>
             {% endif %}
             <div>
@@ -14,10 +15,10 @@
             </div>
             <div>
                 <input type="password" name="password" placeholder="password"/>
-            </div>
-            <div>
-                <button type="submit">Login</button>
-            </div>
+            </div> -->
+            {{ form.as_p }}
+                <button type="submit" style="margin-top:10px">Login</button>
+
             <p>Need an account? Please <a href="/register/">register</a></p>
         </form>
     </div>
