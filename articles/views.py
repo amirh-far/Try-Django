@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 # You can certainly use this lib to do the rendering for you:
 from django.shortcuts import render
-# Create your views here.
+
 
 def article_search_view(request):
     query_dict = request.GET
@@ -20,9 +20,6 @@ def article_search_view(request):
     context = {"object": article_obj}
     return render(request,"articles/search.html", context=context)
 
-# def article_home_view(request):
-#     HTML_RESPONSE = ""
-#     return HttpResponse(HTML_RESPONSE)
 
 def article_detail_view(request, id, *args, **argv):
     article_obj = None
