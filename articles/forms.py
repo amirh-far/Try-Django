@@ -4,7 +4,6 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         # Describing the other parts of model form with meta class
         model = Article
-        print(model)
         fields = ["title", "content"]
     def clean(self):
         data = self.cleaned_data

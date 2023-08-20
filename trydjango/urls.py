@@ -26,7 +26,6 @@ from articles.views import(
 from accounts.views import(
     login_view,
     logout_view,
-    register_view,
     
 )
 
@@ -38,6 +37,5 @@ urlpatterns = [
     path("articles/<int:id>/", article_detail_view),
     path("articles/create/", article_create_view),
     path("login/", login_view), 
-    path("logout/", logout_view),
-    path("register/", register_view)
+    path("logout/", logout_view)
 ]
