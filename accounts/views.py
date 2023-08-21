@@ -23,7 +23,7 @@ def login_view(request):
             return redirect("/")
     else:
         form = AuthenticationForm(request)
-        context = {"form" : form}
+    context = {"form" : form}
     return render(request, "accounts/login.html", context)
 
 # Old way to login:

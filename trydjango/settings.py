@@ -27,9 +27,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = str(os.environ.get('DEBUG')) == '1'
 
 ALLOWED_HOSTS = []
+ENV_ALLOWED_HOST = os.environ.get('DJANGO_ALLOWED_HOST')
 
-if not DEBUG:
-    ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOSTS')]
+# if not DEBUG:
+#     ALLOWED_HOSTS += [os.environ.get('ALLOWED_HOSTS')]
+if ENV_ALLOWED_HOST is not None:
+    ALLOWED_HOSTS +=  [ ENV_ALLOWED_HOST ]
 
 
 # Application definition
@@ -87,6 +90,34 @@ WSGI_APPLICATION = 'trydjango.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+POSTGRES_DB = os.environ.get("POSTGRES_DB") # database name
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD") # database user password
+POSTGRES_USER = os.environ.get("POSTGRES_USER") # Database username
+POSTGRES_HOST = os.environ.get("POSTGRES_HOST") # database host
+POSTGRES_PORT = os.environ.get("POSTGRES_PORT") # database port
+
+POSTGRES_READY = (
+    POSTGRES_DB is not None
+    and POSTGRES_PASSWORD is not None
+    and POSTGRES_USER is not None
+    and POSTGRES_HOST is not None
+    and POSTGRES_PORT is not None
+)
+
+if POSTGRES_READY:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": POSTGRES_DB,
+            "USER": POSTGRES_USER,
+            "PASSWORD": POSTGRES_PASSWORD,
+            "HOST": POSTGRES_HOST,
+            "PORT": POSTGRES_PORT,
+        }
+    }
+
+
 
 DATABASES = {
     'default': {
