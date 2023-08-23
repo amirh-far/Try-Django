@@ -4,12 +4,14 @@ from django.db.models.signals import pre_save, post_save
 from django.utils import timezone
 import datetime
 from django.utils.text import slugify
+
+from articles.utils import slugify_instance_title
 # Create your models here.
 
 class Article(models.Model):
     title = models.CharField(max_length=70)
     content = models.TextField()
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     publish = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
@@ -27,18 +29,6 @@ class Article(models.Model):
 
         super().save(*args, **kwargs)
 
-
-def slugify_instance_title(instance, save=False):
-    slug = slugify(instance.title)
-    instance.slug = slug
-    qs = Article.objects.filter(slug=slug).exclude(id=instance.id) # we exclude the current item because we dont want to check it
-    print(qs.exists())
-    if qs.exists():
-        slug = f"{slug}-{qs.count() + 1}"
-    instance.slug = slug
-    if save:
-        instance.save()
-    return instance
 
 def article_pre_save(sender, instance, *args, **kwargs):
     print("pre_save")
@@ -60,6 +50,6 @@ def article_post_save(sender, instance, created, *args, **kwargs):
 post_save.connect(article_post_save, sender=Article)
 
 
-for obj in Article.objects.all():
-    obj.slug = None
-    obj.save()
+# for obj in Article.objects.all():
+#     obj.slug = None
+#     obj.save()
