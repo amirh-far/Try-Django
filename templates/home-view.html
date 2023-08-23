@@ -9,7 +9,7 @@
 
 {% for x in obj_queryset %}
 <li>
-     <a href="/articles/{{x.id}}/">{{ x.title }}</a> 
+     <a href="/articles/{{x.slug}}/">{{ x.title }}</a> 
 </li>
 {% endfor %}
 
