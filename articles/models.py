@@ -17,7 +17,9 @@ class Article(models.Model):
     publish = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     # null=True means that the data field can be STORED empty 
     # The blank=True means that the form can be accepted empty
-
+    
+    def get_absolute_url(self):
+        return f"/articles/{self.slug}/"
     def save(self, *args, **kwargs):
         # Overriding the save method
         # what we did using save previously:

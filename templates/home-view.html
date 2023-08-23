@@ -9,7 +9,7 @@
 
 {% for x in obj_queryset %}
 <li>
-     <a href="/articles/{{x.slug}}/">{{ x.title }}</a> 
+     <a href={{ x.get_absolute_url() }}>{{ x.title }}</a> 
 </li>
 {% endfor %}
 
