@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{% if object %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
-{% endif %}
-
+    {% if object %}
+        <h1>{{ object.title }}</h1>
+        <p>Author: {{ object.user }} 
+            {% if request.user == object.user %}
+                This is You!
+            {% endif %}
+        </p>
+        <br>
+        <p>{{ object.content }}</p>
+    {% endif %}
 {% endblock %}
