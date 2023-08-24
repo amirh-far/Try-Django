@@ -13,10 +13,7 @@ from django.shortcuts import render, redirect
 
 def article_search_view(request):
     query = request.GET.get("q")
-    if query is not None:
-        lookups = Q(content__icontains=query) | Q(title__icontains=query)
-        qs = Article.objects.filter(lookups)
-
+    qs = Article.objects.search(query=query)
     context = {"object_list": qs}
     return render(request,"articles/search.html", context=context)
 # old search view:
