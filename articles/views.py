@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 # from django.http import HttpResponse
 from .models import Article
 # from django.template.loader import render_to_string
@@ -9,17 +10,27 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 
 
+
 def article_search_view(request):
-    query_dict = request.GET
-    # print(dir(request))
-    query = query_dict.get("q")
-
-    article_obj = None
+    query = request.GET.get("q")
     if query is not None:
-        article_obj = Article.objects.get(id=query)
+        lookups = Q(content__icontains=query) | Q(title__icontains=query)
+        qs = Article.objects.filter(lookups)
 
-    context = {"object": article_obj}
+    context = {"object_list": qs}
     return render(request,"articles/search.html", context=context)
+# old search view:
+# def article_search_view(request):
+#     query_dict = request.GET
+#     # print(dir(request))
+#     query = query_dict.get("q")
+
+#     article_obj = None
+#     if query is not None:
+#         article_obj = Article.objects.get(id=query)
+
+#     context = {"object": article_obj}
+#     return render(request,"articles/search.html", context=context)
 
 
 def article_detail_view(request, slug, *args, **argv):
