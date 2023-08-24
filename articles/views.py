@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 from django.http import Http404
 # You can certainly use this lib to do the rendering for you:
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def article_search_view(request):
@@ -53,6 +53,7 @@ def article_create_view(request, *args, **argv):
         #To avoid duplicate files:
         context["form"] = ArticleForm()
         context["object"] = article_obj
+        return redirect("article-detail", slug=article_obj.slug)
         # context["created"] = True
     # print(request.GET)
 

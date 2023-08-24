@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
-
+from django.urls import reverse
 from django.utils import timezone
 import datetime
 from django.utils.text import slugify
@@ -19,7 +19,10 @@ class Article(models.Model):
     # The blank=True means that the form can be accepted empty
     
     def get_absolute_url(self):
-        return f"/articles/{self.slug}/"
+        # return f"/articles/{self.slug}/"
+        return reverse("article-detail", kwargs={"slug": self.slug})
+
+
     def save(self, *args, **kwargs):
         # Overriding the save method
         # what we did using save previously:

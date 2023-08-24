@@ -23,6 +23,6 @@
 </div>
 {% else%}
 <p>Your article was created. Click the link below to open it</p>
-<a href="/articles/{{ object.id }}/">{{ object.title }}</a>
+<a href=" {{ object.get_absolute_url }} ">{{ object.title }}</a>
 {% endif %}
 {% endblock %}
