@@ -28,6 +28,12 @@ class RecipeTestCase(TestCase):
             quantity = "1/2",
             unit = "pound"
         )
+        self.recipe_ingredient_b = RecipeIngredient.objects.create(
+            recipe = self.recipe_a,
+            name = "Chicken",
+            quantity = "dasdsa",
+            unit = "pound"
+        )
     def test_user_count(self):
         qs = User.objects.all()
         self.assertEqual(qs.count(), 1)
@@ -48,13 +54,13 @@ class RecipeTestCase(TestCase):
         recipe = self.recipe_a
         qs = recipe.recipeingredient_set.all() # Returns a query set
         # print(qs)
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 2)
 
     def test_user_recipe_ingredient_forward_count(self):
         recipe = self.recipe_a
         qs = RecipeIngredient.objects.filter(recipe=recipe) # Returns a query set
         # print(qs)
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 2)
 
     # This two level relation reverse is not recommended:
     def test_user_two_level_relation_reverse(self):
@@ -63,7 +69,7 @@ class RecipeTestCase(TestCase):
             "recipeingredient__id", flat=True))
         # print(recipeingredient_ids)
         qs = RecipeIngredient.objects.filter(id__in=recipeingredient_ids)
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 2)
 
     # And this one is rarely used and its not recommended:
     def test_user_two_level_relation_via_recipes(self):
@@ -72,7 +78,7 @@ class RecipeTestCase(TestCase):
         # print(ids)
         qs = RecipeIngredient.objects.filter(recipe__id__in=ids)
         # print(qs)
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 2)
     
     def test_unit_measure_validation_error(self):
         invalid_units = ["nada", "dasda"]
@@ -95,3 +101,7 @@ class RecipeTestCase(TestCase):
             unit = valid_unit,
             )
         ingredient.full_clean()
+
+    def test_quantity_as_float(self):
+        self.assertIsNotNone(self.recipe_ingredient_a.quantity_as_float)
+        self.assertIsNone(self.recipe_ingredient_b.quantity_as_float)
