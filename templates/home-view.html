@@ -2,18 +2,18 @@
 
 
 {% block content %}
-<h1> {{title}} id: {{id}}</h1>
+     <h1> {{title}} id: {{id}}</h1>
 
-<p1> {{content}} </p1>
-<br>
-<a href='{% url "article-create" %}'>Create Article</a>
-<br>
-<a href='{% url "article-detail" slug="new-data" %}'>New data article</a>
+     <p1> {{content}} </p1>
+     <br>
+     <a href='{% url "articles:create" %}'>Create Article</a>
+     <br>
+     <a href='{% url "articles:detail" slug="new-data" %}'>New data article</a>
 
-{% for x in obj_queryset %}
-<li>
-     <a href="{{ x.get_absolute_url }}">{{ x.title }}</a> 
-</li>
-{% endfor %}
+     {% for x in obj_queryset %}
+          <li>
+               <a href="{{ x.get_absolute_url }}">{{ x.title }}</a> 
+          </li>
+     {% endfor %}
 
 {% endblock content %}
