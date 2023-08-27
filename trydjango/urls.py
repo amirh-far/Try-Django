@@ -29,6 +29,12 @@ from accounts.views import(
     register_view,
     
 )
+from recipes.views import(
+    recipe_create_view,
+    recipe_detail_view,
+    recipe_list_view,
+    recipe_update_view,
+)
 
 urlpatterns = [
     path("", home_view), # index /home /root
@@ -40,4 +46,5 @@ urlpatterns = [
     path("login/", login_view), 
     path("logout/", logout_view),
     path("register/", register_view),
+    path("recipes/", recipe_list_view)
 ]
