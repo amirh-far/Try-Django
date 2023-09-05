@@ -1,17 +1,15 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-{% for obj in query_set %}
-    <li>id: {{obj.id}}</li>
-    <li>name: {{obj.name}}</li>
-    <!-- <li>description: {{obj.description}}</li>
-        directions: {{obj.directions}}
-        <br>
-        timestamp: {{obj.timestamp}}
-        <br>
-        updated: {{obj.updated}}
-        <br>
-        active: {{obj.active}} -->
 
-    <p>-----------------------------------</p>
+{% block content %}
+     <h1>My Recipes</h1>
 
-{% endfor %}
+     <a href='{% url "recipes:create" %}'>Add recipe</a>
+
+     {% for x in object_list %}
+          <li>
+               <a href="{{ x.get_absolute_url }}" style="margin-top:30px;">{{ x.name }}</a> 
+          </li>
+     {% endfor %}
+
+{% endblock content %}

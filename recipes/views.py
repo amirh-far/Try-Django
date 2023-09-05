@@ -29,9 +29,9 @@ def recipe_create_view(request):
     return render(request, "recipes/create-update.html", context=context)
 
 @login_required
-def recipe_update_view(request):
+def recipe_update_view(request, id):
     obj = get_object_or_404(Recipe, id=id, user=request.user)
-    form = RecipeForm(request.POST or None, instance=obj)
+    form = RecipeForm(request.POST or None, instance=obj) # because we have this instance=obj we can see a pre filled form
     context={"object": obj, "form": form}    
     if form.is_valid():
         obj = form.save()

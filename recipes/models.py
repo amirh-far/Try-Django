@@ -12,8 +12,16 @@ class Recipe(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+
     def get_absolute_url(self):
         return reverse("recipes:detail", kwargs={"id": self.id})
+    
+    def get_edit_url(self):
+        return reverse("recipes:update", kwargs={"id": self.id})
+    
+    def get_ingredinets_children(self):
+        return self.recipeingredient_set.all()
+    
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=220)
