@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.forms.models import modelformset_factory # model form for querysets
 from .models import Recipe, RecipeIngredient
 from .forms import RecipeForm, RecipeIngredientForm
 # we will implement the CRUD -> Create Retrieve Update Detail
@@ -32,16 +33,20 @@ def recipe_create_view(request):
 def recipe_update_view(request, id):
     obj = get_object_or_404(Recipe, id=id, user=request.user)
     form = RecipeForm(request.POST or None, instance=obj) # because we have this instance=obj we can see a pre filled form
-    form_2 = RecipeIngredientForm(request.POST or None)
-    context={"object": obj, "form": form, "form_2": form_2}    
-    if all([form.is_valid(), form_2.is_valid()]):
+    RecipeIngredientFormset = modelformset_factory(model=RecipeIngredient, form=RecipeIngredientForm, extra=0)
+    qs = obj.recipeingredient_set.all()
+    formset = RecipeIngredientFormset(request.POST or None, queryset=qs)
+    context={"object": obj, "form": form, "formset": formset}  
+
+    if all([form.is_valid(), formset.is_valid]):
         parent = form.save(commit=False)
         parent.save()
-        child = form_2.save(commit=False)
-        child.recipe = parent
-        child.save()
-        print("form", form.cleaned_data)
-        print("form_2", form_2.cleaned_data)
+        for form in formset:
+            child = form.save(commit=False)
+            if child.recipe is None:
+                print("Added New")
+                child.recipe = parent
+            child.save()
         context["message"] = "Data saved."
 
     return render(request, "recipes/create-update.html", context=context)

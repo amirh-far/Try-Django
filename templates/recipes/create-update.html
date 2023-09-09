@@ -10,9 +10,9 @@
     <form action='.' method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        {% if form_2 %}
+        {% if formset %}
             <h2>Ingredients</h2>
-            {{ form_2.as_p }}
+            {{ formset.as_p }}
         {% endif %}
         <button type="submit" style="margin-top:10px;">Save</button>
         
