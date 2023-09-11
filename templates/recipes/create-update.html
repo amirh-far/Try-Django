@@ -1,78 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-
-<style>
-    .igredient-form {
-        border-bottom: 1px solid black
-    }
-    .hidden {
-        display : none
-    }
-</style>
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
- 
-<div style="margin-top:30px;">
-    <form action='.' method="POST">
-        {% csrf_token %}
-            {% for field in form %}
-            <div class="{% if field.field.required %}{{ form.required_css_class }}{% endif %}">
-                {{ field.errors }}
-                {{ field.label_tag}} {{ field }}
-                {% if field.help_text %}
-                    <p class="help">{{ field.help_text|safe }}</p>
-                {% endif %}
-            </div>
-            {% endfor %}
-        {% if formset %}
-            <h2>Ingredients</h2>
-            {{ formset.management_form}}
-            <div id="ingredient-form-list">
-            {% for form in formset %}
-                    <div class="ingredient-form">
-                        {{ form.as_p}}
-                    </div>
-                {% endfor %}
-            </div>
-
-
-            <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
-            <button id="add-more" type="button">Add more</button> <!-- make sure that u use the button type instead of submit to ensure it doesnt save the data-->
-        {% endif %}
-
-        <button type="submit" style="margin-top:10px;">Save</button>
-        
-        
-    </form>  
-</div>
-
-<script>
-    const addMoreBtn = document.getElementById("add-more")
-
-    addMoreBtn.addEventListener("click", add_new_form)
-
-    function add_new_form(event) {
-        if (event) {
-            event.preventDefault()
+    <style>
+        .igredient-form {
+            border-bottom: 1px solid black
         }
-        const totalNewForms = document.getElementById("id_form-TOTAL_FORMS")
-        const currentIngredientForms = document.getElementsByClassName("ingredient-form")
-        const currentFormCount = currentIngredientForms.length
-        const formCopyTarget = document.getElementById("ingredient-form-list")
-        const copyEmptyFormEl = document.getElementById("empty-form").cloneNode(true)
-        copyEmptyFormEl.setAttribute("class", "ingredient-form")
-        copyEmptyFormEl.setAttribute("id", `form-${currentFormCount}`)
-        const regex = new RegExp("__prefix__", "g")
-        copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentFormCount)
-        totalNewForms.setAttribute("value", currentFormCount + 1)
-        formCopyTarget.append(copyEmptyFormEl)
-    }
+        .hidden {
+            display : none
+        }
+    </style>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <div style="margin-top:30px;">
+        {% include 'recipes/partials/forms.html' %}
+    </div>
 
+    <script>
+        const addMoreBtn = document.getElementById("add-more")
 
+        addMoreBtn.addEventListener("click", add_new_form)
 
-</script>
+        function add_new_form(event) {
+            if (event) {
+                event.preventDefault()
+            }
+            const totalNewForms = document.getElementById("id_form-TOTAL_FORMS")
+            const currentIngredientForms = document.getElementsByClassName("ingredient-form")
+            const currentFormCount = currentIngredientForms.length
+            const formCopyTarget = document.getElementById("ingredient-form-list")
+            const copyEmptyFormEl = document.getElementById("empty-form").cloneNode(true)
+            copyEmptyFormEl.setAttribute("class", "ingredient-form")
+            copyEmptyFormEl.setAttribute("id", `form-${currentFormCount}`)
+            const regex = new RegExp("__prefix__", "g")
+            copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentFormCount)
+            totalNewForms.setAttribute("value", currentFormCount + 1)
+            formCopyTarget.append(copyEmptyFormEl)
+        }
+
+    </script>
 
 {% endblock %}  
