@@ -1,9 +1,5 @@
 <form action='.' method="POST" hx-post="." hx-swap="outerHTML"> <!-- hx-post means that: send a post method to the "." url-->
     {% csrf_token %}
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
-
         {% for field in form %}
         <div class="{% if field.field.required %}{{ form.required_css_class }}{% endif %}">
             {{ field.errors }}
@@ -29,7 +25,11 @@
         <button id="add-more" type="button">Add more</button> <!-- make sure that u use the button type instead of submit to ensure it doesnt save the data-->
     {% endif %}
 
-    <button type="submit" style="margin-top:10px;">Save</button>
-    
-    
+    <div class="htmx-indicator">Loading...</div>
+    <button class="htmx-inverted-indicator" type="submit" style="margin-top:10px;">Save</button>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
 </form>

@@ -9,17 +9,22 @@
             display : none
         }
     </style>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+
     <div style="margin-top:30px;">
         {% include 'recipes/partials/forms.html' %}
     </div>
 
     <script>
         const addMoreBtn = document.getElementById("add-more")
-
-        addMoreBtn.addEventListener("click", add_new_form)
+        // Before using HTMX:
+        // addMoreBtn.addEventListener("click", add_new_form)
+        // Using HTMX:
+        document.addEventListener("click", (event)=>{
+            // console.log(event.target, event.target.id)
+            if (event.target.id == "add-more") {
+                add_new_form(event)
+            }
+        })
 
         function add_new_form(event) {
             if (event) {
