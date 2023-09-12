@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory # model form for querysets
+from django.http import HttpResponse 
+from django.urls import reverse
 from .models import Recipe, RecipeIngredient
 from .forms import RecipeForm, RecipeIngredientForm
 # we will implement the CRUD -> Create Retrieve Update Detail
@@ -14,9 +16,25 @@ def recipe_list_view(request):
 
 @login_required
 def recipe_detail_view(request, id=None):
-    obj = get_object_or_404(Recipe, id=id, user=request.user)
-    context={"object": obj}
+    hx_url = reverse("recipes:hx-detail", kwargs={"id": id})
+    context = {"hx_url": hx_url}
     return render(request, "recipes/detail.html", context=context)
+    # Previous way of doing things without htmx:
+    # obj = get_object_or_404(Recipe, id=id, user=request.user)
+    # context={"object": obj}
+    # return render(request, "recipes/detail.html", context=context)
+
+
+@login_required
+def recipe_detail_hx_view(request, id=None):
+    try:
+        obj = Recipe.objects.get(id=id, user=request.user)
+    except:
+        obj = None
+    if obj is None:
+        return HttpResponse("Not found.")
+    context={"object": obj}
+    return render(request, "recipes/partials/detail.html", context=context)
 
 @login_required
 def recipe_create_view(request):
