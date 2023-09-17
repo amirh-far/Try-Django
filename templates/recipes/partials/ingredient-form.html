@@ -1,0 +1,6 @@
+<form action='.' method="POST" hx-post="{% if url %} {{url}} {% else %}.{% endif %}" hx-swap="outerHTML"> <!-- hx-post means that: send a post method to the "." url-->
+    {% csrf_token %}
+    {{ form.as_p}}
+    <div class="htmx-indicator">Loading...</div>
+    <button class="htmx-inverted-indicator" type="submit" style="margin-top:10px;">Save</button>
+</form>

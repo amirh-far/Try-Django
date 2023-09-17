@@ -9,7 +9,7 @@
             {% endif %}
         </div>
         {% endfor %}
-    {% if formset %}
+    <!-- {% if formset %}
         <h2>Ingredients</h2>
         {{ formset.management_form}}
         <div id="ingredient-form-list">
@@ -22,8 +22,8 @@
 
 
         <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
-        <button id="add-more" type="button">Add more</button> <!-- make sure that u use the button type instead of submit to ensure it doesnt save the data-->
-    {% endif %}
+        <button id="add-more" type="button">Add more</button> make sure that u use the button type instead of submit to ensure it doesnt save the data
+    {% endif %} -->
 
     <div class="htmx-indicator">Loading...</div>
     <button class="htmx-inverted-indicator" type="submit" style="margin-top:10px;">Save</button>
