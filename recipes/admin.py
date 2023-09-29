@@ -9,7 +9,7 @@ admin.site.register(RecipeIngredient)
 
 class RecipeAdmin(admin.ModelAdmin):
     inlines = [RecipeIngredientInline]
-    list_display = ["name", "user"]
+    list_display = ["name","description", "user"]
     readonly_fields = ["timestamp", "updated"]
     raw_id_fields = ["user"]
 

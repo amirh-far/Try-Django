@@ -1,4 +1,5 @@
-<form action='.' method="POST" hx-post="." hx-swap="outerHTML"> <!-- hx-post means that: send a post method to the "." url-->
+<div id="recipe-container">
+<form action='.' method="POST" hx-post="." hx-swap="outerHTML" hx-trigger="change delay:500ms, submit"> <!-- hx-post means that: send a post method to the "." url-->
     {% csrf_token %}
         {% for field in form %}
         <div class="{% if field.field.required %}{{ form.required_css_class }}{% endif %}">
@@ -33,3 +34,4 @@
     {% endif %}
 
 </form>
+</div>
