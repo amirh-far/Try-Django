@@ -46,7 +46,15 @@ def recipe_create_view(request):
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
-        return redirect(obj.get_absolute_url())
+        if request.htmx:
+            headers = { 
+                "HX-Push": obj.get_absolute_url()
+                }
+            # return HttpResponse("Created", headers=headers)
+            context = {
+                "object": obj
+            }
+            return render(request, "recipes/partials/detail.html", context=context)
     return render(request, "recipes/create-update.html", context=context)
 
 @login_required

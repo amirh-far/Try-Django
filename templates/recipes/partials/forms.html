@@ -1,5 +1,6 @@
 <div id="recipe-container">
-<form action='.' method="POST" hx-post="." hx-swap="outerHTML" hx-trigger="change delay:500ms, submit"> <!-- hx-post means that: send a post method to the "." url-->
+<form action='.' method="POST" hx-post="." hx-swap="outerHTML" 
+hx-trigger="{% if form.instance.id %}change delay:500ms,{% endif %} submit"> <!-- hx-post means that: send a post method to the "." url-->
     {% csrf_token %}
         {% for field in form %}
         <div class="{% if field.field.required %}{{ form.required_css_class }}{% endif %}">
@@ -12,7 +13,7 @@
         {% endfor %}
     <!-- {% if formset %}
         <h2>Ingredients</h2>
-        {{ formset.management_form}}
+         {{ formset.management_form}}
         <div id="ingredient-form-list">
         {% for form in formset %}
                 <div class="ingredient-form">
