@@ -19,14 +19,10 @@
     </head>
     <body>
         <h1>Hello World</h1>
-        <form action="blog/" method="get">
-            <input type="text" name="q" />
-            <input type="submit"/>
-            <br>
+        {% include "search/search-form.html" %}
 
-        </form>
         {% block content %}
+            <h3>This will be replaced</h3>
         {% endblock content %}
-        
     </body>
 </html>

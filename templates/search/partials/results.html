@@ -1,0 +1,10 @@
+Searched for {{request.GET.q}} under {{request.GET.type|title}}s
+{% for object in queryset %}
+    <li> <a href="{{ object.get_absolute_url }}">{{object.name}}</a></li>
+    {% empty %}
+    <li>No results found</li>
+{% endfor %}
+
+{% if request.htmx %}
+    <a href="/search/?type={{request.GET.type}}&q={{request.GET.q}}">View All</a>
+{% endif %}

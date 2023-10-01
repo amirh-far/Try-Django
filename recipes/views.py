@@ -49,7 +49,7 @@ def recipe_create_view(request):
         if request.htmx:
             headers = { 
                 "HX-Push": obj.get_absolute_url()
-                }
+            }
             # return HttpResponse("Created", headers=headers)
             context = {
                 "object": obj
