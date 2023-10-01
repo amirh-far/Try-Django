@@ -57,6 +57,9 @@ class Recipe(models.Model):
     
     def get_edit_url(self):
         return reverse("recipes:update", kwargs={"id": self.id})
+        
+    def get_delete_url(self):
+        return reverse("recipes:delete", kwargs={"id": self.id})
     
     def get_ingredinets_children(self):
         return self.recipeingredient_set.all()
@@ -67,7 +70,6 @@ class RecipeIngredient(models.Model):
     description = models.TextField(blank=True, null=True)
     quantity = models.CharField(max_length=50)
     quantity_as_float = models.FloatField(blank=True, null=True)
-    # pounds, lbs, oz, gram 
     unit = models.CharField(max_length=50, validators=[validate_unit_of_measure]) 
     directions = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -77,6 +79,9 @@ class RecipeIngredient(models.Model):
     def get_absolute_url(self):
         return self.recipe.get_absolute_url()
     
+    def get_delete_url(self):
+        return reverse("recipes:ingredient-delete", kwargs={"parent_id": self.recipe.id, "id": self.id})
+    
     def get_hx_edit_url(self):
         return reverse("recipes:hx-ingredient-detail", kwargs={"parent_id": self.recipe.id, "id": self.id})
 
@@ -85,16 +90,13 @@ class RecipeIngredient(models.Model):
             return None
         ureg = pint.UnitRegistry(system=system)
         measurement = self.quantity_as_float * ureg[self.unit]
-        # print(measurement)
         return measurement
     
     def as_mks(self):     
         measurement = self.convert_to_system(system="mks")
-        # print(measurement)
         return measurement.to_base_units()
     def as_imperial(self):
         measurement = self.convert_to_system(system="imperial")
-        # print(measurement)
         return measurement.to_base_units()
     
     def save(self, *args, **kwargs):

@@ -1,4 +1,15 @@
-<div id="ingredient-{{object.id}}">
+<style>
+    .button-container {
+        display: flex;
+    }
+</style>
+
+<div id="ingredient-{{object.id}}" class="button-container">
     {{ object.quantity }} {{ object.unit }} - {{ object.name }}
     <button hx-trigger="click" hx-get="{{ object.get_hx_edit_url }}" hx-target="#ingredient-{{object.id}}">Edit</button>
+    <div>
+        <form action="{{object.get_delete_url}}">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
 </div> 

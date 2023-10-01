@@ -36,3 +36,8 @@ hx-trigger="{% if form.instance.id %}change delay:500ms,{% endif %} submit"> <!-
 
 </form>
 </div>
+<div id="recipe-delete">
+    <form action="{{ object.get_delete_url }}">
+        <button type="submit" style="margin-top:10px;">Delete</button>
+    </form>
+</div>

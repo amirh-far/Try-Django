@@ -1,7 +1,10 @@
 <h1>
     {{object.name}}
     {% if object.get_edit_url %}
-        <small> <a href="{{ object.get_edit_url }}">Edit</a></small>
+        <small>
+            <a href="{{ object.get_edit_url }}">Edit</a>
+            <a href="{{ object.get_delete_url }}">Delete</a>
+        </small>
     {% endif %}
 </h1>
 <p>{{ object.description }}</p>
