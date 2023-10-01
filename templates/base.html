@@ -24,5 +24,11 @@
         {% block content %}
             <h3>This will be replaced</h3>
         {% endblock content %}
+
+        <script>
+            document.addEventListener("htmx:configRequest", (event)=>{
+                event.detail.headers["X-CSRFToken"] = "{{csrf_token}}"
+            })
+        </script>
     </body>
 </html>
