@@ -1,2 +1,4 @@
 .env
 bin/
+staticfiles-cdn/
+.DS_Store
