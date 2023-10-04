@@ -4,3 +4,4 @@ psycopg2-binary
 django-dotenv
 pint
 django-htmx
+pillow

@@ -1,4 +1,7 @@
 import pint
+import pathlib
+import uuid
+
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
@@ -64,6 +67,15 @@ class Recipe(models.Model):
     def get_ingredinets_children(self):
         return self.recipeingredient_set.all()
     
+def recipe_ingredient_image_upload_handler(instance, filename):
+    fpath = pathlib.Path(filename)
+    new_fname = str(uuid.uuid1()) # uuid1 -> uuid + timestamp
+    return f"recipes/ingredient/{new_fname}{fpath.suffix}"
+
+class RecipeIngredientImage(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)    
+    image = models.ImageField(upload_to=recipe_ingredient_image_upload_handler)
+
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=220)

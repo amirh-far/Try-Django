@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Recipe, RecipeIngredient
+from .models import Recipe, RecipeIngredient, RecipeIngredientImage
+
+admin.site.register(RecipeIngredientImage)
 
 class RecipeIngredientInline(admin.StackedInline):
     model = RecipeIngredient
@@ -14,3 +16,4 @@ class RecipeAdmin(admin.ModelAdmin):
     raw_id_fields = ["user"]
 
 admin.site.register(Recipe, RecipeAdmin)
+
