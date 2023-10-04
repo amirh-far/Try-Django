@@ -2,7 +2,9 @@
 
 {% block content %}
 
-    <form method="POST" action="." enctype="multipart/form-data">
+    <form method="POST" action="." enctype="multipart/form-data"
+        hx-post="{{request.path}}"
+        hx-encoding="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Upload Image</button>

@@ -186,6 +186,9 @@ def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
     return render(request, "recipes/partials/ingredient-form.html", context=context)
 
 def recipe_ingredient_image_upload_view(request, parent_id):
+    template_name = "recipes/upload-image.html"
+    if request.htmx:
+        template_name = "recipes/partials/image-upload-form.html"
     print(request.FILES.get("image"))
     try:
         parent_obj = Recipe.objects.get(id=parent_id, user=request.user)
@@ -200,4 +203,4 @@ def recipe_ingredient_image_upload_view(request, parent_id):
         obj.recipe = parent_obj
         # obj.recipe_id = parent_id the other way to do it
         obj.save()
-    return render(request, "image-form.html", {"form": form})
+    return render(request, template_name, {"form": form})
