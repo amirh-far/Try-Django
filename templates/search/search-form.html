@@ -1,6 +1,6 @@
 <div>
-    <form action="/search/" method="GET">
-        <select name="type" id="search-type">
+    <form action="/search/" method="GET" class="d-flex">
+        <select class="form-control" name="type" id="search-type">
     
             {% if request.GET.type == "article" %}
                 <option value="article" selected>Articles</option>
@@ -15,10 +15,11 @@
             {% endif %}
     
         </select>
-        <input type="text" id="search-query" name="q" value="{{request.GET.q}}"
+        <input class="form-control me-2" type="text" id="search-query" name="q" value="{{request.GET.q}}"
           hx-get="/search/" hx-trigger="keyup changed delay:200ms" hx-include="#search-type" 
           hx-target="#typeahead_results">
-        <input type="submit"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        
     </form>
     <div id="typeahead_results"></div>
 </div>
