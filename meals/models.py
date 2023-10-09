@@ -33,14 +33,34 @@ class MealQuerySet(models.QuerySet):
     def aborted(self):
         return self.filter(status=MealStatus.ABORTED)
     
+    def in_queue(self, recipe_id):
+        return self.pending().filter(recipe_id=recipe_id).exists()
+    
 class MealManager(models.Manager):
     def get_queryset(self):
             return MealQuerySet(self.model, using=self._db)
- 
+    
+    def toggle_in_queue(self, user_id, recipe_id):
+        qs = self.get_queryset().all().by_user_id(user_id)
+        already_queued = qs.in_queue(recipe_id)
+        if already_queued:
+            recipe_qs = qs.filter(recipe_id=recipe_id)
+            recipe_qs.update(status=MealStatus.ABORTED)
+            added = False
+        else:
+            obj = self.model(
+                user_id=user_id,
+                recipe_id=recipe_id,
+                status=MealStatus.PENDING
+            )
+            obj.save()
+            added = True
+        return added
+
 
 class Meal(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    user = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=1, choices=MealStatus.choices, default=MealStatus.PENDING)
