@@ -10,12 +10,17 @@
         }
     </style>
 
-    <div style="margin-top:30px;">
-        <div class="col-12 col-md-8">
+    <div>
+        <div class="{% if object.id %}col-12 col-md-8{% else %}col-md-8{% endif %}">
+            {% if not object.id %}
+                <h1>Create Recipe</h1>
+            {% endif %}
+
+
             {% include 'recipes/partials/forms.html' %}
 
         </div>
-        <div class="col-12 col-md-4">
+        <div class="{% if object.id %}col-12 col-md-8{% else %}d-none{% endif %}">
             <h3>Ingredients</h3>
             {% for ingredient in object.get_ingredinets_children %}
                 {% include "recipes/partials/ingredient-inline.html" with object=ingredient %}
