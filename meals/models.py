@@ -3,14 +3,16 @@ from django.db import models
 from django.db.models.signals import post_save
 from recipes.models import Recipe
 
+
+from .signals import (meal_added, meal_removed)
 User = settings.AUTH_USER_MODEL
 
 class MealStatus(models.TextChoices):
     PENDING = 'p', 'Pending'
     COMPLETED = 'c', 'Completed'
     EXPIRED = 'e', 'Expired'
-    ABORTED = 'a', 'Aborted'
-
+    ABORTED = 'a', 'Aborted' 
+ 
 
 
 class MealQuerySet(models.QuerySet):
@@ -78,5 +80,21 @@ class Meal(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True) 
     updated = models.DateTimeField(auto_now=True) 
     status = models.CharField(max_length=1, choices=MealStatus.choices, default=MealStatus.PENDING)
+    prev_status = models.CharField(max_length=1,null=True, default=None,
+                                    choices=MealStatus.choices)
+
 
     objects = MealManager()
+
+
+def meal_post_save(sender, instance, created, *args, **kwargs):
+    if instance.status != instance.prev_status:
+        if instance.status == MealStatus.PENDING:
+            meal_added.send(sender=sender, instance=instance)
+        if instance.status == MealStatus.ABORTED:
+            meal_removed.send(sender=sender, instance=instance)
+
+        instance.prev_status = instance.status
+        instance.save()
+
+post_save.connect(meal_post_save, sender=Meal)
