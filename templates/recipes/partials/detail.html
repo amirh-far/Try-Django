@@ -13,7 +13,6 @@
 <p>{{ object.description }}</p>
 <p>{{ object.directions }}</p>
 {% for ingredient in object.get_ingredinets_children %}
-    <h1> {{ ingredient.name }}</h1>
-    <p>{{ ingredient.as_imperial }}</p>
-    <p>{{ ingredient.as_mks }}</p>
+    {% include "recipes/partials/ingredient-inline.html" with object=ingredient %}
 {% endfor %}
+
