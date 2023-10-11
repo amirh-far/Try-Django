@@ -13,7 +13,7 @@
 </style>
 
 <div class='row'>
-        <div class='{% if object.id %}col-12 col-md-8 {% else %} col-md-6 mx-auto {% endif %}'>
+        <div class='col-12'>
             {% if not object.id %}
                 <h1>Create Recipe</h1>
             {% endif %}
@@ -22,7 +22,8 @@
             {% include 'recipes/partials/forms.html' %}
         </div>
 
-        <div class='{% if object.id %}col-12 col-md-4 {% else %} d-none {% endif %}'>
+        <div class='col-12'>
+            <br>
             <h3>Ingredients</h3>
             
             <div id='ingredients-list'>
