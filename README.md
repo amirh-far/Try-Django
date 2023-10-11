@@ -12,7 +12,7 @@ Checkout their youtube channel for this course: <br>
 3. [Installation](#installation)
 4. [Tutorial Content](#tutorial-content)
 5. [Contributing](#contributing)
-6. [License](#license)
+
 
 ## Getting Started
 In this project you will learn django which is a popular backend framework in python.
@@ -70,7 +70,7 @@ In this project we don't focus on shiny frontend because we are learning Django!
 #### Create-Update Recipe View
 <img src="https://github.com/amirh-far/Try-Django/blob/main/readme-images-files/create-update%20view.png"/>
 
-
+## Contributing
 
 Feel free to modify this template to suit your specific tutorial and repository. Ensure that you provide clear and concise information to help users get started with your Django tutorial. <br>
 Happy coding!
