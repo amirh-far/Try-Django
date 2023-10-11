@@ -1,6 +1,6 @@
 # Try-Django-3.2
 
-Welcome to the Try-Django repository! This repository contains a Django tutorial that will help you learn the fundamentals of building web applications with Django, a high-level Python web framework. Whether you're a beginner or an experienced developer looking to learn Django, this tutorial is designed to get you started.
+Welcome to the Try-Django repository! This repository contains a Django tutorial that will help you learn the fundamentals of building web applications with Django, a high-level Python web framework. Whether you're a beginner or an experienced developer looking to learn Django, this tutorial is designed to get you started.<br>
 A huge shout-out to "Coding for Entrepreneurs" for putting together this fantastic course!
 Checkout their youtube channel for this course: <br>
 [Try-Django-3.2 Youtube Course](https://www.youtube.com/watch?v=SlHBNXW1rTk&list=PLEsfXFp6DpzRMby_cSoWTFw8zaMdTEXgL&ab_channel=CodingEntrepreneurs)
