@@ -56,7 +56,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 ## Tutorial Content
-In this project we don't focus on fancy frontend because we are learning Django!
+In this project we don't focus on fancy frontend because we are focusing on learning Django!
 
 #### Home View
 <img src="https://github.com/amirh-far/Try-Django/blob/main/readme-images-files/home%20view.png"/>
