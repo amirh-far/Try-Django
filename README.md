@@ -32,7 +32,7 @@ This project includes:
 
 ## Prerequisites
 1. Install python 3.6 on your machine. [Install Python](https://www.python.org/downloads/release/python-368/) <br>
-2. Install Git [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) <br>
+2. Perhaps you need Git! [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) <br>
 
 ## Installation
 
